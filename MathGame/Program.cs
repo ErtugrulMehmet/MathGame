@@ -6,33 +6,32 @@ using System.Security;
 
 while (true)
 {
-    string answer = Helper.GetAnswer();
+    string answer = Calculation.GetAnswer();
     Console.WriteLine($"Selected Option: {answer}");
-    Helper.ProcessAnswer(answer);
+    Calculation.ProcessAnswer(answer);
     Console.WriteLine("If you want to continue please click any character");
     string exitKey = Console.ReadLine();
-    if (exitKey == "exit")
-    {
+
+    if (exitKey == "exit")    
         break;
-    }
+    
 }
 
-
-
-class Helper
+class Calculation
 {
     public static Dictionary<string, string> PreviousGames = new Dictionary<string, string>();
     public static string GetAnswer()
     {
 
         Console.WriteLine("What would you like to play today?. Choose from the options below:");
-        Console.WriteLine("A - View Previous Games");
-        Console.WriteLine("B - Addition");
-        Console.WriteLine("C - Subtraction");
-        Console.WriteLine("D - Multiplaction");
-        Console.WriteLine("E - Division");
-        Console.WriteLine("E - Quit the program");
-
+        Console.WriteLine(" ----------------------------------- ");
+        Console.WriteLine("| A - View Previous Games           |");
+        Console.WriteLine("| B - Addition                      |");
+        Console.WriteLine("| C - Subtraction                   |");
+        Console.WriteLine("| D - Multiplaction                 |");
+        Console.WriteLine("| E - Division                      |");
+        Console.WriteLine("| F - Quit the program              |");
+        Console.WriteLine(" ----------------------------------- ");
 
         return Console.ReadLine() ?? "";
     }
@@ -43,6 +42,7 @@ class Helper
         switch (answer.ToUpper())
         {
             case "A":
+                Console.WriteLine("Previous Games: ");
                 Console.WriteLine(ViewPreviousGames());
                 break;
             case "B":             
@@ -57,6 +57,9 @@ class Helper
             case "E":
                 Console.WriteLine(Division(GetDivisionNumbers()));
                 break;
+            case "F":
+                Environment.Exit(0) ;
+                break;
             default:
                 Console.WriteLine("Please Select a valid game!!");
                 break;
@@ -67,12 +70,14 @@ class Helper
 
     public static string ViewPreviousGames()
     {
-        string previousGames = "Previous Games: ";
-        foreach (var item in PreviousGames)
-        {
-            Console.WriteLine($" Game: {item.Key} - Result: {item.Value}"); 
-        }
-        return previousGames;
+        string result = "";
+        if (PreviousGames.Count == 0)        
+            result = "There is no any game to show!";
+        
+        foreach (var item in PreviousGames)        
+            result += $"Game: {item.Key} - Result: {item.Value}  \n "; 
+        
+        return result;
     }
     #region Addition
     public static List<int> GetAdditionNumbers()
@@ -91,7 +96,7 @@ class Helper
             if (int.TryParse(inputValue, out int number))
             {
                 numbers.Add(number);
-                output += numbers.Count > 1 ? $" + {number} " : $" {number} ";
+                output += numbers.Count > 1 ? $"+ {number} " : $" {number} ";
                 Console.WriteLine(output);
             }
             else
@@ -128,7 +133,7 @@ class Helper
             if (int.TryParse(inputValue, out int number))
             {
                 numbers.Add(number);
-                output += numbers.Count > 1 ? $" - {number} " : $" {number} ";
+                output += numbers.Count > 1 ? $"- {number} " : $" {number} ";
                 Console.WriteLine(output);
             }
             else
@@ -165,7 +170,7 @@ class Helper
             if (int.TryParse(inputValue, out int number))
             {
                 numbers.Add(number);
-                output += numbers.Count > 1 ? $" * {number} " : $" {number} ";
+                output += numbers.Count > 1 ? $"* {number} " : $" {number} ";
                 Console.WriteLine(output);
             }
             else
@@ -203,7 +208,7 @@ class Helper
             if (int.TryParse(inputValue, out int number))
             {
                 numbers.Add(number);
-                output += numbers.Count > 1 ? $" / {number} " : $" {number} ";
+                output += numbers.Count > 1 ? $"/ {number} " : $" {number} ";
                 Console.WriteLine(output);
             }
             else
